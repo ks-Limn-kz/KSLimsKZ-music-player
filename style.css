@@ -9,9 +9,11 @@
     --b: 120;
 
     --accent: rgb(var(--r), var(--g), var(--b));
-    --accent-soft: rgba(var(--r), var(--g), var(--b), .28);
-    --accent-glow: rgba(var(--r), var(--g), var(--b), .55);
-    --accent-dark: rgba(var(--r), var(--g), var(--b), .13);
+    --accent-soft: rgba(var(--r), var(--g), var(--b), .42);
+    --accent-glow: rgba(var(--r), var(--g), var(--b), .75);
+    --accent-dark: rgba(var(--r), var(--g), var(--b), .24);
+    --accent-strong: rgba(var(--r), var(--g), var(--b), .95);
+    --accent-tint: rgb(190, 190, 190);
 
     --text: #ffffff;
     --soft: rgba(255,255,255,.62);
@@ -88,15 +90,14 @@ body {
 
     box-shadow:
         0 35px 100px rgba(0,0,0,.7),
-        0 0 90px var(--accent-dark),
+        0 0 130px var(--accent-glow),
         inset 0 1px 0 rgba(255,255,255,.08);
 
     backdrop-filter: blur(35px);
     -webkit-backdrop-filter: blur(35px);
 
     transition:
-        box-shadow 1s ease,
-        background 1s ease;
+        box-shadow .3s ease;
 }
 
 
@@ -175,18 +176,17 @@ body {
 
     filter: blur(75px);
 
-    opacity: .40;
+    opacity: .58;
 
     pointer-events: none;
 
     transition:
-        background 1s ease,
         opacity 1s ease,
         transform 1.2s ease;
 }
 
 .player.is-playing .ambient {
-    opacity: .75;
+    opacity: .92;
     transform: scale(1.12);
 }
 
@@ -252,12 +252,12 @@ body {
     align-items: center;
     justify-content: center;
 
-    border: 1px solid rgba(255,255,255,.08);
+    border: 1px solid var(--accent-soft);
     border-radius: 50%;
 
     background: rgba(255,255,255,.055);
 
-    color: rgba(255,255,255,.68);
+    color: var(--accent-tint);
 
     cursor: pointer;
 
@@ -265,18 +265,22 @@ body {
         transform .25s var(--ease),
         background .25s ease,
         color .25s ease,
+        border-color .3s ease,
         box-shadow .35s ease;
 }
 
 .icon-button:hover {
     color: #fff;
 
-    background: rgba(255,255,255,.12);
+    background: var(--accent-dark);
+
+    border-color: var(--accent);
 
     transform: translateY(-2px);
 
     box-shadow:
-        0 10px 25px rgba(0,0,0,.3);
+        0 10px 25px rgba(0,0,0,.3),
+        0 0 26px var(--accent-glow);
 }
 
 .icon-button:active {
@@ -411,7 +415,7 @@ body {
     -webkit-user-drag: none;
 
     transition:
-        box-shadow .7s ease,
+        box-shadow .25s ease,
         border-color .7s ease;
 }
 
@@ -420,7 +424,7 @@ body {
 
     box-shadow:
         0 30px 80px rgba(0,0,0,.72),
-        0 0 55px var(--accent-soft);
+        0 0 80px var(--accent-glow);
 }
 
 .vinyl-center {
@@ -680,29 +684,40 @@ body {
 
     background: transparent;
 
-    color: rgba(255,255,255,.58);
+    color: var(--accent-tint);
+
+    opacity: .82;
 
     cursor: pointer;
 
     transition:
         color .25s ease,
+        opacity .25s ease,
         transform .2s var(--ease),
         background .25s ease,
         box-shadow .3s ease;
 }
 
 .control-button:hover {
-    color: #fff;
+    color: var(--accent);
 
-    background: rgba(255,255,255,.065);
+    opacity: 1;
+
+    background: var(--accent-dark);
 
     transform: translateY(-3px);
+
+    box-shadow:
+        0 0 26px var(--accent-glow);
 }
 
 .control-button:active {
     transform: scale(.82);
 
-    background: rgba(255,255,255,.13);
+    background: var(--accent-soft);
+
+    box-shadow:
+        0 0 30px var(--accent-glow);
 }
 
 .control-button svg {
@@ -721,13 +736,15 @@ body {
 .control-button.active {
     color: var(--accent);
 
-    background: var(--accent-dark);
+    opacity: 1;
+
+    background: var(--accent-soft);
 
     box-shadow:
         inset 0 0 0 1px
-        rgba(var(--r),var(--g),var(--b),.18),
+        var(--accent-strong),
 
-        0 0 20px var(--accent-dark);
+        0 0 26px var(--accent-glow);
 }
 
 .mode-dot {
@@ -941,12 +958,14 @@ body {
     fill: none;
 
     stroke:
-        rgba(255,255,255,.55);
+        var(--accent-tint);
 
     stroke-width: 1.7;
 
     stroke-linecap: round;
     stroke-linejoin: round;
+
+    transition: stroke .3s ease;
 }
 
 .volume-slider {
@@ -1081,7 +1100,7 @@ body {
     justify-content: center;
 
     border:
-        1px solid rgba(255,255,255,.08);
+        1px solid var(--accent-soft);
 
     border-radius: 50%;
 
@@ -1089,22 +1108,31 @@ body {
         rgba(255,255,255,.055);
 
     color:
-        rgba(255,255,255,.65);
+        var(--accent-tint);
 
     cursor: pointer;
 
     transition:
         transform .3s ease,
-        background .25s ease;
+        background .25s ease,
+        border-color .3s ease,
+        color .25s ease,
+        box-shadow .35s ease;
 }
 
 .close-button:hover {
     transform: rotate(90deg);
 
     background:
-        rgba(255,255,255,.12);
+        var(--accent-dark);
 
-    color: #fff;
+    border-color:
+        var(--accent);
+
+    color: var(--accent);
+
+    box-shadow:
+        0 0 26px var(--accent-glow);
 }
 
 .close-button svg {
@@ -1155,6 +1183,10 @@ body {
         0 0 25px var(--accent-dark);
 }
 
+.search-box:focus-within svg {
+    stroke: var(--accent);
+}
+
 .search-box svg {
     width: 17px;
     height: 17px;
@@ -1162,7 +1194,7 @@ body {
     fill: none;
 
     stroke:
-        rgba(255,255,255,.45);
+        var(--accent-tint);
 
     stroke-width: 1.8;
 
@@ -1199,6 +1231,145 @@ body {
     color: var(--faint);
 
     font-size: 11px;
+}
+
+
+/* =========================================================
+   MANAGER LOGIN
+========================================================= */
+
+.manager-login {
+    margin-top: 28px;
+
+    padding: 22px 18px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,.03);
+}
+
+.manager-login-hint {
+    margin-bottom: 16px;
+
+    color:
+        var(--faint);
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.manager-login-input {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    margin-top: 8px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,.05);
+
+    color: #fff;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+        border-color .3s ease,
+        box-shadow .35s ease;
+}
+
+.manager-login-input:first-child {
+    margin-top: 0;
+}
+
+.manager-login-input:focus {
+    border-color:
+        var(--accent);
+
+    box-shadow:
+        0 0 25px var(--accent-dark);
+}
+
+.manager-login-input::placeholder {
+    color:
+        rgba(255,255,255,.34);
+}
+
+.manager-login-error {
+    min-height: 16px;
+
+    margin-top: 10px;
+
+    color: #ff6b6b;
+
+    font-size: 11px;
+
+    opacity: 0;
+
+    transition: opacity .25s ease;
+}
+
+.manager-login-error.visible {
+    opacity: 1;
+}
+
+.manager-login-submit {
+    justify-content: center;
+
+    margin-top: 14px;
+
+    background: var(--accent-dark);
+    border-color: rgba(255,255,255,.12);
+}
+
+
+/* =========================================================
+   MANAGER LOGOUT
+========================================================= */
+
+.manager-logout {
+    width: 100%;
+
+    margin-top: 30px;
+
+    padding: 12px;
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: var(--faint);
+
+    font-family: inherit;
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition:
+        color .25s ease,
+        border-color .25s ease;
+}
+
+.manager-logout:hover {
+    color:
+        var(--accent);
+
+    border-color:
+        var(--accent-soft);
 }
 
 
@@ -1252,10 +1423,13 @@ body {
 
 .artist-dropdown[open] {
     border-color:
-        rgba(var(--r),var(--g),var(--b),.18);
+        var(--accent);
 
     background:
         rgba(255,255,255,.035);
+
+    box-shadow:
+        0 0 22px var(--accent-dark);
 
     padding-bottom: 10px;
 }
@@ -1292,7 +1466,9 @@ body {
 
 .artist-summary:hover {
     background:
-        rgba(255,255,255,.055);
+        var(--accent-dark);
+
+    color: var(--accent);
 }
 
 .artist-summary span {
@@ -1355,10 +1531,10 @@ body {
 }
 
 .album-summary:hover {
-    color: #fff;
+    color: var(--accent);
 
     background:
-        rgba(255,255,255,.065);
+        var(--accent-dark);
 }
 
 .album-dropdown[open] {
@@ -1382,6 +1558,8 @@ body {
 ========================================================= */
 
 .song-item {
+    position: relative;
+
     width: 100%;
 
     display: flex;
@@ -1415,19 +1593,44 @@ body {
         translateX(4px);
 
     background:
-        rgba(255,255,255,.055);
+        var(--accent-dark);
+
+    border-color:
+        var(--accent-soft);
 }
 
 .song-item.active {
     background:
         linear-gradient(
             90deg,
-            var(--accent-dark),
+            var(--accent-soft),
             rgba(255,255,255,.035)
         );
 
     border-color:
-        rgba(255,255,255,.1);
+        var(--accent);
+
+    box-shadow:
+        0 0 26px var(--accent-glow);
+}
+
+.song-item.active::before {
+    content: "";
+
+    position: absolute;
+
+    top: 8px;
+    bottom: 8px;
+    left: 0;
+
+    width: 3px;
+
+    border-radius: 999px;
+
+    background: var(--accent);
+
+    box-shadow:
+        0 0 12px var(--accent-glow);
 }
 
 .song-item-cover {

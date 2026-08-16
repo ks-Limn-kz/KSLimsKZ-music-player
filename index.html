@@ -541,6 +541,66 @@
 
 
         <!-- =====================================
+             MANAGER LOGIN
+        ====================================== -->
+
+        <div
+            class="manager-login"
+            id="managerLogin"
+        >
+
+            <p class="manager-login-hint">
+                Esta sección es solo para administrar el catálogo.
+            </p>
+
+            <form id="managerLoginForm">
+
+                <input
+                    id="managerUsername"
+                    class="manager-login-input"
+                    type="text"
+                    placeholder="Usuario"
+                    autocomplete="off"
+                    required
+                >
+
+                <input
+                    id="managerPassword"
+                    class="manager-login-input"
+                    type="password"
+                    placeholder="Contraseña"
+                    autocomplete="off"
+                    required
+                >
+
+                <p
+                    class="manager-login-error"
+                    id="managerLoginError"
+                ></p>
+
+                <button
+                    class="song-item manager-login-submit"
+                    type="submit"
+                >
+
+                    <div class="song-item-title">
+                        Entrar
+                    </div>
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div
+            class="manager-content"
+            id="managerContent"
+            hidden
+        >
+
+        <!-- =====================================
              FOLDERS
         ====================================== -->
 
@@ -768,6 +828,17 @@
                 id="editSongList"
                 class="song-list"
             ></div>
+
+        </div>
+
+
+            <button
+                class="manager-logout"
+                id="managerLogout"
+                type="button"
+            >
+                Cerrar sesión del Manager
+            </button>
 
         </div>
 

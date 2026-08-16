@@ -438,6 +438,27 @@ const closeManager =
 const managerOverlay =
     document.getElementById("managerOverlay");
 
+const managerLogin =
+    document.getElementById("managerLogin");
+
+const managerContent =
+    document.getElementById("managerContent");
+
+const managerLoginForm =
+    document.getElementById("managerLoginForm");
+
+const managerUsername =
+    document.getElementById("managerUsername");
+
+const managerPassword =
+    document.getElementById("managerPassword");
+
+const managerLoginError =
+    document.getElementById("managerLoginError");
+
+const managerLogout =
+    document.getElementById("managerLogout");
+
 const selectProjectFolder =
     document.getElementById("selectProjectFolder");
 
@@ -1357,23 +1378,18 @@ addSongForm.addEventListener(
 
 
         /*
-         * Evitar sobrescribir cover.
+         * El cover SÍ puede repetirse a propósito —
+         * varias canciones del mismo álbum comparten
+         * portada. Si el archivo ya existe en covers/,
+         * simplemente lo reutilizamos en vez de
+         * bloquear el guardado.
          */
 
-        if (
+        const coverAlreadyExists =
             await fileExists(
                 coverDirectoryHandle,
                 coverFile.name
-            )
-        ) {
-
-            alert(
-                `El cover "${coverFile.name}" ya existe en COVERS. No se modificó.`
             );
-
-            return;
-
-        }
 
 
         /*
@@ -1406,40 +1422,47 @@ addSongForm.addEventListener(
 
 
         /*
-         * Después copiamos el cover.
+         * Después copiamos el cover — a menos que ya
+         * exista, en cuyo caso lo reutilizamos tal cual
+         * (misma portada para varias canciones del
+         * mismo álbum).
          */
 
-        try {
+        if (!coverAlreadyExists) {
 
-            await copyFileToFolder(
-                coverFile,
-                coverDirectoryHandle
-            );
+            try {
 
-        }
+                await copyFileToFolder(
+                    coverFile,
+                    coverDirectoryHandle
+                );
 
-        catch (error) {
+            }
 
-            console.error(
-                error
-            );
+            catch (error) {
+
+                console.error(
+                    error
+                );
 
 
-            /*
-             * IMPORTANTE:
-             *
-             * No borramos la canción que acabamos
-             * de copiar.
-             *
-             * Así nunca tocamos archivos existentes.
-             */
+                /*
+                 * IMPORTANTE:
+                 *
+                 * No borramos la canción que acabamos
+                 * de copiar.
+                 *
+                 * Así nunca tocamos archivos existentes.
+                 */
 
-            alert(
-                "La canción se copió correctamente, pero no se pudo copiar el cover.\n\n" +
-                error.message
-            );
+                alert(
+                    "La canción se copió correctamente, pero no se pudo copiar el cover.\n\n" +
+                    error.message
+                );
 
-            return;
+                return;
+
+            }
 
         }
 
@@ -1511,8 +1534,13 @@ addSongForm.addEventListener(
             alert(
                 `✓ "${title}" fue agregada correctamente.\n\n` +
                 `Música → ${musicDirectoryHandle.name}\n` +
-                `Cover → ${coverDirectoryHandle.name}\n` +
-                `catalog.json actualizado — esta canción ya se verá en cualquier navegador.`
+                `Cover → ${coverDirectoryHandle.name}` +
+                (
+                    coverAlreadyExists
+                        ? " (reutilizando el cover existente)"
+                        : ""
+                ) +
+                `\ncatalog.json actualizado — esta canción ya se verá en cualquier navegador.`
             );
 
         }
@@ -3073,6 +3101,187 @@ playlistOverlay.addEventListener(
    MANAGER
 ========================================================= */
 
+/* =========================================================
+   MANAGER LOGIN
+
+   IMPORTANTE — esto es un candado simple, NO seguridad
+   real. Este proyecto es una página estática: cualquiera
+   que abra las herramientas de desarrollador puede leer
+   este usuario/contraseña directo en player.js. Sirve
+   únicamente para que un visitante casual no se ponga a
+   tocar "Agregar canción" por curiosidad — no para
+   proteger datos sensibles.
+========================================================= */
+
+const MANAGER_USERNAME =
+    "Limn";
+
+const MANAGER_PASSWORD =
+    "contraseña";
+
+const MANAGER_SESSION_KEY =
+    "lims_manager_unlocked";
+
+
+function isManagerUnlocked() {
+
+    try {
+
+        return (
+            sessionStorage.getItem(
+                MANAGER_SESSION_KEY
+            ) === "true"
+        );
+
+    }
+
+    catch (error) {
+
+        return false;
+
+    }
+
+}
+
+
+function showManagerContent() {
+
+    managerLogin.hidden =
+        true;
+
+    managerContent.hidden =
+        false;
+
+}
+
+
+function showManagerLogin() {
+
+    managerContent.hidden =
+        true;
+
+    managerLogin.hidden =
+        false;
+
+
+    managerPassword.value =
+        "";
+
+
+    managerLoginError.textContent =
+        "";
+
+
+    managerLoginError.classList.remove(
+        "visible"
+    );
+
+}
+
+
+function unlockManager() {
+
+    try {
+
+        sessionStorage.setItem(
+            MANAGER_SESSION_KEY,
+            "true"
+        );
+
+    }
+
+    catch (error) {
+
+        /*
+         * Si sessionStorage no está disponible,
+         * el desbloqueo solo dura mientras la
+         * pestaña siga abierta en memoria.
+         */
+
+    }
+
+
+    showManagerContent();
+
+}
+
+
+function lockManager() {
+
+    try {
+
+        sessionStorage.removeItem(
+            MANAGER_SESSION_KEY
+        );
+
+    }
+
+    catch (error) {}
+
+
+    showManagerLogin();
+
+}
+
+
+managerLoginForm.addEventListener(
+    "submit",
+    event => {
+
+        event.preventDefault();
+
+
+        const enteredUsername =
+            managerUsername.value.trim();
+
+        const enteredPassword =
+            managerPassword.value;
+
+
+        if (
+            enteredUsername === MANAGER_USERNAME &&
+            enteredPassword === MANAGER_PASSWORD
+        ) {
+
+            managerLoginForm.reset();
+
+
+            unlockManager();
+
+
+            renderEditSongs();
+
+        }
+
+        else {
+
+            managerLoginError.textContent =
+                "Usuario o contraseña incorrectos.";
+
+
+            managerLoginError.classList.add(
+                "visible"
+            );
+
+
+            managerPassword.value =
+                "";
+
+
+            managerPassword.focus();
+
+        }
+
+    }
+);
+
+
+managerLogout.addEventListener(
+    "click",
+    lockManager
+);
+
+
 function openManager() {
 
     closePlaylistPanel();
@@ -3094,7 +3303,22 @@ function openManager() {
     );
 
 
-    renderEditSongs();
+    if (
+        isManagerUnlocked()
+    ) {
+
+        showManagerContent();
+
+
+        renderEditSongs();
+
+    }
+
+    else {
+
+        showManagerLogin();
+
+    }
 
 }
 
@@ -3777,19 +4001,177 @@ function extractCoverColors(
    COLOR HELPERS
 ========================================================= */
 
+function rgbToHsl(
+    r,
+    g,
+    b
+) {
+
+    r /= 255;
+    g /= 255;
+    b /= 255;
+
+
+    const max =
+        Math.max(r, g, b);
+
+    const min =
+        Math.min(r, g, b);
+
+
+    let h = 0;
+    let s = 0;
+
+    const l =
+        (max + min) / 2;
+
+
+    const delta =
+        max - min;
+
+
+    if (delta !== 0) {
+
+        s =
+            l > .5
+                ? delta / (2 - max - min)
+                : delta / (max + min);
+
+
+        switch (max) {
+
+            case r:
+                h =
+                    (g - b) / delta +
+                    (g < b ? 6 : 0);
+                break;
+
+            case g:
+                h =
+                    (b - r) / delta + 2;
+                break;
+
+            default:
+                h =
+                    (r - g) / delta + 4;
+
+        }
+
+
+        h /= 6;
+
+    }
+
+
+    return {
+        h,
+        s,
+        l
+    };
+
+}
+
+
+function hslToRgb(
+    h,
+    s,
+    l
+) {
+
+    if (s === 0) {
+
+        const v =
+            Math.round(l * 255);
+
+
+        return {
+            r: v,
+            g: v,
+            b: v
+        };
+
+    }
+
+
+    const hue2rgb =
+        (p, q, t) => {
+
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+
+            return p;
+
+        };
+
+
+    const q =
+        l < .5
+            ? l * (1 + s)
+            : l + s - l * s;
+
+    const p =
+        2 * l - q;
+
+
+    return {
+        r: Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
+        g: Math.round(hue2rgb(p, q, h) * 255),
+        b: Math.round(hue2rgb(p, q, h - 1 / 3) * 255)
+    };
+
+}
+
+
+/*
+ * boostColor() ya NO solo multiplica el brillo —
+ * fuerza cada color de la paleta a un mínimo de
+ * saturación y a un rango de luminosidad legible,
+ * para que el "respirar" de colores se sienta
+ * como iluminación ambiental viva, no como un
+ * tono apagado casi idéntico al anterior.
+ */
+
 function boostColor(
     color
 ) {
 
-    const boost =
-        1.22;
+    const hsl =
+        rgbToHsl(
+            color.r,
+            color.g,
+            color.b
+        );
 
 
-    return {
-        r: Math.min(255, Math.round(color.r * boost)),
-        g: Math.min(255, Math.round(color.g * boost)),
-        b: Math.min(255, Math.round(color.b * boost))
-    };
+    const boostedSaturation =
+        Math.min(
+            1,
+            Math.max(
+                hsl.s * 1.6,
+                .62
+            )
+        );
+
+
+    const clampedLightness =
+        Math.min(
+            .66,
+            Math.max(
+                .38,
+                hsl.l
+            )
+        );
+
+
+    return hslToRgb(
+        hsl.h,
+        boostedSaturation,
+        clampedLightness
+    );
 
 }
 
@@ -3901,12 +4283,68 @@ function applyColors(
     );
 
 
+    /*
+     * --accent-tint se calcula acá mismo (mezclado
+     * con blanco) en vez de usar color-mix() en CSS.
+     * Así garantizamos que se vea igual y se actualice
+     * igual en cualquier navegador, sin depender de
+     * soporte de color-mix().
+     */
+
+    const tintR =
+        Math.round(r + (255 - r) * .32);
+
+    const tintG =
+        Math.round(g + (255 - g) * .32);
+
+    const tintB =
+        Math.round(b + (255 - b) * .32);
+
+
+    document.documentElement.style.setProperty(
+        "--accent-tint",
+        `rgb(${tintR}, ${tintG}, ${tintB})`
+    );
+
+
     ambient.style.background =
         `radial-gradient(
             circle at 50% 25%,
             rgba(${r}, ${g}, ${b}, .82),
             transparent 70%
         )`;
+
+
+    /*
+     * Refrescamos la barra de progreso con el color
+     * literal en cada cuadro (no solo cuando cambia
+     * el tiempo de reproducción), para que siga el
+     * mismo ritmo que el fondo, sin depender de que
+     * el navegador vuelva a calcular var(--accent)
+     * dentro de un gradiente puesto por JS.
+     */
+
+    if (
+        typeof progress !== "undefined" &&
+        progress
+    ) {
+
+        const value =
+            Number(
+                progress.value
+            ) || 0;
+
+
+        progress.style.background =
+            `linear-gradient(
+                to right,
+                rgb(${r}, ${g}, ${b}) 0%,
+                rgb(${r}, ${g}, ${b}) ${value}%,
+                var(--track) ${value}%,
+                var(--track) 100%
+            )`;
+
+    }
 
 }
 

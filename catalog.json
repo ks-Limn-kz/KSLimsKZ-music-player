@@ -1,10 +1,194 @@
 [
     {
-        "id": "song-1786824996959-nvsbfho1pu",
+        "id": "song-1786844026592-yc9uij4807q",
         "title": "CHIHIRO",
-        "artist": "CHIHIRO",
-        "album": "CHIHIRO",
+        "artist": "Billie Eilish",
+        "album": "Hit Me Hard and Soft",
         "file": "Billie Eilish - CHIHIRO.mp3",
         "cover": "Billie Eilish - CHIHIRO.png"
+    },
+    {
+        "id": "song-1786844147753-9t4ebnr2wj7",
+        "title": "Moscow Mule",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "01. Bad Bunny - Moscow Mule.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844234404-ad8cdbv6l6",
+        "title": "Después de la Playa",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "02. Bad Bunny - Después de la Playa.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844416582-r4fl1ab511",
+        "title": "Me Porto Bonito",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "03. Bad Bunny, Chencho Corleone - Me Porto Bonito.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844484480-xph5qyzrs3",
+        "title": "Tití Me Preguntó",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "04. Bad Bunny - Tití Me Preguntó.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844537219-0x6d9tq62tfi",
+        "title": "Un Ratito",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "05. Bad Bunny - Un Ratito.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844583542-80ndl5lybpu",
+        "title": "Yo No Soy Celoso",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "06. Bad Bunny - Yo No Soy Celoso.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844621572-bg0vuf4k2s7",
+        "title": "Tarot",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "07. Bad Bunny, Jhay Cortez - Tarot.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844656938-fef1hssdh4",
+        "title": "Neverita",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "08. Bad Bunny - Neverita.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844680724-9azxavsyjbt",
+        "title": "La Corriente",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "09. Bad Bunny, Tony Dize - La Corriente.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844701072-dy8i5cbk6dp",
+        "title": "Efecto",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "10. Bad Bunny - Efecto.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844728401-7p5hmii5rsu",
+        "title": "Party",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "11. Bad Bunny, Rauw Alejandro - Party.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844752888-6nclo8s98wh",
+        "title": "Aguacero",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "12. Bad Bunny - Aguacero.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844790435-tpkgzwxqb19",
+        "title": "Enséñame a Bailar",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "13. Bad Bunny - Enséñame a Bailar.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844833881-ov96e1jpo1",
+        "title": "Ojitos Lindos",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "14. Bad Bunny, Bomba Estereo - Ojitos Lindos.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844868948-z0hby38o8hj",
+        "title": "Dos Mil 16",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "15. Bad Bunny - Dos Mil 16.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844898132-i9ftcl9eg3",
+        "title": "El Apagón",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "16. Bad Bunny - El Apagón.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844921315-7jis3uupfz7",
+        "title": "Otro Atardecer",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "17. Bad Bunny, The Marías - Otro Atardecer.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844945098-gnjbbdodutl",
+        "title": "Un Coco",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "18. Bad Bunny - Un Coco.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786844966188-2atmrhjf1fe",
+        "title": "Andrea",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "19. Bad Bunny, Buscabulla - Andrea.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786845005022-g2uj0m4ql3s",
+        "title": "Me Fui De Vacaciones",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "20. Bad Bunny - Me Fui de Vacaciones.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786845033803-vj779l1eg",
+        "title": "Un Verano Sin Ti",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "21. Bad Bunny - Un Verano Sin Ti.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786845057664-xsidji2vt4e",
+        "title": "Agosto",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "22. Bad Bunny - Agosto.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1786845078381-mkzqtzgblxe",
+        "title": "Callaita",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "23. Bad Bunny - Callaita.mp3",
+        "cover": "Un verano sin ti.png"
     }
 ]
