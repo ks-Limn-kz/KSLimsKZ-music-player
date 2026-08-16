@@ -3744,6 +3744,20 @@ function extractCoverColors(
         new Image();
 
 
+    /*
+     * Necesario para cuando el reproductor se sirve
+     * desde un CDN (jsDelivr) con <base href> distinto
+     * al origen real de la página (ej. Google Sites).
+     * Sin esto, el canvas queda "contaminado" y no se
+     * puede leer para sacar la paleta de color — el
+     * cover se seguiría viendo bien, pero el sistema
+     * de color ambiental se caería en silencio.
+     */
+
+    image.crossOrigin =
+        "anonymous";
+
+
     image.onload =
         () => {
 
