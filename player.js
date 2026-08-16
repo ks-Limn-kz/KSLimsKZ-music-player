@@ -3745,17 +3745,49 @@ function extractCoverColors(
 
 
     /*
-     * Necesario para cuando el reproductor se sirve
-     * desde un CDN (jsDelivr) con <base href> distinto
-     * al origen real de la página (ej. Google Sites).
-     * Sin esto, el canvas queda "contaminado" y no se
-     * puede leer para sacar la paleta de color — el
-     * cover se seguiría viendo bien, pero el sistema
-     * de color ambiental se caería en silencio.
+     * Solo activamos crossOrigin cuando el cover
+     * realmente viene de OTRO origen (ej. jsDelivr
+     * detrás de un <base href> distinto al del sitio
+     * que aloja el reproductor, como en el launcher
+     * de Google Sites).
+     *
+     * Si lo dejáramos fijo siempre, rompía la carga
+     * de la imagen al probar local (file://) o en
+     * GitHub Pages, donde el cover SÍ es del mismo
+     * origen y no hace falta — y ahí sí puede fallar
+     * el modo CORS sin necesidad.
      */
 
-    image.crossOrigin =
-        "anonymous";
+    try {
+
+        const resolvedURL =
+            new URL(
+                imageURL,
+                document.baseURI
+            );
+
+
+        if (
+            resolvedURL.origin !==
+            window.location.origin
+        ) {
+
+            image.crossOrigin =
+                "anonymous";
+
+        }
+
+    }
+
+    catch (error) {
+
+        /*
+         * Si no se pudo resolver la URL por algún
+         * motivo, dejamos crossOrigin sin definir —
+         * es el comportamiento seguro de siempre.
+         */
+
+    }
 
 
     image.onload =
