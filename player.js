@@ -1983,54 +1983,89 @@ function startRotation() {
         }
 
 
-        const delta =
-            timestamp -
-            lastRotationTime;
-
-
-        lastRotationTime =
-            timestamp;
-
-
-        rotation +=
-            delta *
-            0.018;
-
-
-        if (
-            rotation >= 360
-        ) {
-
-            rotation -= 360;
-
-        }
-
-
-        cover.style.transform =
-            `rotate(${rotation}deg)`;
-
-
         /*
-         * El color ambiental avanza EXACTAMENTE
-         * junto con la rotación del disco.
+         * IMPORTANTE:
          *
-         * Como esto solo se ejecuta dentro de
-         * este mismo loop, se congela solo por
-         * el hecho de pausar (stopRotation
-         * cancela este requestAnimationFrame).
+         * Pedimos el SIGUIENTE cuadro primero,
+         * antes de hacer cualquier otro cálculo.
+         *
+         * Así, si algo de lo que sigue lanza un
+         * error puntual (un color raro, una lectura
+         * del DOM en mal momento, etc.), el loop
+         * NUNCA se queda trabado esperando pausa/
+         * despausa — el siguiente cuadro ya está
+         * programado pase lo que pase.
          */
-
-        applyColors(
-            getAmbientColorForRotation(
-                rotation
-            )
-        );
-
 
         rotationFrame =
             requestAnimationFrame(
                 rotate
             );
+
+
+        try {
+
+            const delta =
+                timestamp -
+                lastRotationTime;
+
+
+            lastRotationTime =
+                timestamp;
+
+
+            rotation +=
+                delta *
+                0.018;
+
+
+            if (
+                rotation >= 360
+            ) {
+
+                rotation %=
+                    360;
+
+            }
+
+
+            cover.style.transform =
+                `rotate(${rotation}deg)`;
+
+
+            /*
+             * El color ambiental avanza EXACTAMENTE
+             * junto con la rotación del disco.
+             *
+             * Como esto solo se ejecuta dentro de
+             * este mismo loop, se congela solo por
+             * el hecho de pausar (stopRotation
+             * cancela este requestAnimationFrame).
+             */
+
+            applyColors(
+                getAmbientColorForRotation(
+                    rotation
+                )
+            );
+
+        }
+
+        catch (error) {
+
+            /*
+             * Un cuadro fallido no debe matar el
+             * loop completo — se ignora y seguimos
+             * en el siguiente cuadro, ya programado
+             * arriba.
+             */
+
+            console.error(
+                "Rotación: se ignoró un cuadro por un error:",
+                error
+            );
+
+        }
 
     }
 
@@ -2611,6 +2646,26 @@ function buildArtistGroups(
     );
 
 
+    /*
+     * Orden alfabético por artista — ÚNICAMENTE
+     * visual. El array `songs` (orden real de
+     * reproducción con siguiente/anterior) nunca
+     * se reordena, solo esta lista de grupos que
+     * usa renderPlaylist() para pintar la UI.
+     */
+
+    groups.sort(
+        (a, b) =>
+            a.artist.localeCompare(
+                b.artist,
+                undefined,
+                {
+                    sensitivity: "base"
+                }
+            )
+    );
+
+
     return groups;
 
 }
@@ -3114,10 +3169,10 @@ playlistOverlay.addEventListener(
 ========================================================= */
 
 const MANAGER_USERNAME =
-    "Limn";
+    "L";
 
 const MANAGER_PASSWORD =
-    "contraseña";
+    "limn";
 
 const MANAGER_SESSION_KEY =
     "lims_manager_unlocked";
