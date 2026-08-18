@@ -190,5 +190,157 @@
         "album": "Un Verano Sin Ti",
         "file": "23. Bad Bunny - Callaita.mp3",
         "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1787019340788-kq3o6jcq3dg",
+        "title": "Obstáculo",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "01. Obstáculo (Ft. Myke Towers).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019391087-d606xm2yakr",
+        "title": "Pasiempre",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "02. Pasiempre (Ft. Bad Bunny, Arcangel, Jhayco, Myke Towers, Omar Courtz y Arca).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019438874-mv5v3hb3vrn",
+        "title": "Todavía",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "03. Todavía (Ft. Wisin y Yandel).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019475630-5xw3dnzl2ip",
+        "title": "Fantasma AVC",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "04. Fantasma AVC (Ft. Jhayco).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019583538-f8adk98kafd",
+        "title": "Mojabi Ghost",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "05. Mojabi Ghost (Ft. Bad Bunny).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019614163-wdqgkio5y1",
+        "title": "11 y Once",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "06. 11 y Once (Ft. Sech y E.VAX).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019641056-1p8je9a46ys",
+        "title": "Desde Las 10",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "07. Desde Las 10 (Ft. Kany García).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019670130-aubjk9q3qt",
+        "title": "Mañana",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "08. Mañana (Ft. Young Miko y The Marías).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019694674-xg36pfwkbnh",
+        "title": "Buenos Aires",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "09. Buenos Aires (Ft. Mora y Zion).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019714089-q9kqwgpzebs",
+        "title": "La Baby",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "10. La Baby (Ft. Daddy Yanke, Feid y Sech).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019732379-ghuel73qcu7",
+        "title": "Me Jodi...",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "11. Me Jodi... (Ft. Arcangel).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019758739-4h4pulo5l73",
+        "title": "Volver",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "12. Volver (Ft. Rauw Alejandro, Skrillex y Four Tet).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019779823-x3q8zyq04s9",
+        "title": "En Visto",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "13. En Visto (Ft. Ozuna).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019812561-drvmtw2s53s",
+        "title": "Lo siento BB",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "14. Lo Siento BB (Ft. Bad Bunny y Julieta Venegas).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019850433-eli7ipij5od",
+        "title": "Si Preguntas Por Mi",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "15. Si Preguntas Por Mi (Ft. Kris Floyd y Judeline).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019881294-979x1epis78",
+        "title": "Sci-Fi",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "16. Sci-Fi (Ft. Rauw Alejandro).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019909216-yr77pvbqi4n",
+        "title": "Corelone Interlude",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "17. Corelone Interlude (Ft. Chencho Corleone).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019968481-qw3ayimd8it",
+        "title": "Paranormal",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "18. Paranormal (Ft. Alvaro Díaz).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787019999621-9kz6k5f9ysc",
+        "title": "Sacrificio",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "19. Sacrificio (Ft. Xantos).mp3",
+        "cover": "DATA.png"
     }
 ]
