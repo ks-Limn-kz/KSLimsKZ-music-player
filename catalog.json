@@ -342,5 +342,69 @@
         "album": "DATA",
         "file": "19. Sacrificio (Ft. Xantos).mp3",
         "cover": "DATA.png"
+    },
+    {
+        "id": "song-1787021501783-5z7q8rb7y19",
+        "title": "MOJAITA",
+        "artist": "Bad Bunny",
+        "album": "OASIS",
+        "file": "1 - J Balvin Ft Bad Bunny - MOJAITA.mp3",
+        "cover": "OASIS.png"
+    },
+    {
+        "id": "song-1787021537251-dg7qikmh10g",
+        "title": "YO LE LLEGO",
+        "artist": "Bad Bunny",
+        "album": "OASIS",
+        "file": "2 - J Balvin Ft Bad Bunny - YO LE LLEGO.mp3",
+        "cover": "OASIS.png"
+    },
+    {
+        "id": "song-1787021568925-o0lfl9yuoj",
+        "title": "CUIDADO POR AHÍ",
+        "artist": "Bad Bunny",
+        "album": "OASIS",
+        "file": "3 - J Balvin Ft Bad Bunny - CUIDAO POR AHÍ.mp3",
+        "cover": "OASIS.png"
+    },
+    {
+        "id": "song-1787021594338-wqpyhgvccp",
+        "title": "QUE PRETENDES",
+        "artist": "Bad Bunny",
+        "album": "OASIS",
+        "file": "4 - J Balvin Ft Bad Bunny - QUE PRETENDES.mp3",
+        "cover": "OASIS.png"
+    },
+    {
+        "id": "song-1787021615076-6hyjr22on67",
+        "title": "LA CANCION",
+        "artist": "Bad Bunny",
+        "album": "OASIS",
+        "file": "5 - J Balvin Ft Bad Bunny - LA CANCIÓN.mp3",
+        "cover": "OASIS.png"
+    },
+    {
+        "id": "song-1787021639146-sy3ez77e2xe",
+        "title": "UN PESO",
+        "artist": "Bad Bunny",
+        "album": "OASIS",
+        "file": "6 -J Balvin Ft Bad Bunny & Marciano Cantero - UN PESO.mp3",
+        "cover": "OASIS.png"
+    },
+    {
+        "id": "song-1787021667840-f7vnl081vcf",
+        "title": "ODIO",
+        "artist": "Bad Bunny",
+        "album": "OASIS",
+        "file": "7 - J Balvin Ft Bad Bunny & Mr Eazy - ODIO.mp3",
+        "cover": "OASIS.png"
+    },
+    {
+        "id": "song-1787021692069-a24tn2bl5sk",
+        "title": "COMO UN BEBÉ",
+        "artist": "Bad Bunny",
+        "album": "OASIS",
+        "file": "8 - J Balvin Ft Bad Bunny, Mr Eazi - COMO UN BEBÉ.mp3",
+        "cover": "OASIS.png"
     }
 ]
