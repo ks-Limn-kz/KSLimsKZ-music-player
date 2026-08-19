@@ -4864,6 +4864,1021 @@ document.addEventListener(
    INITIALIZATION
 ========================================================= */
 
+/* =========================================================
+   YOUTUBE MODULE
+
+   Completamente aparte del reproductor principal:
+   no toca songs[], loadSong(), nextSong(), shuffle,
+   repeat, ni ningún control existente. Tiene su propia
+   cola, su propio reproductor (el oficial de YouTube),
+   y su propio almacenamiento en localStorage — nada de
+   esto pasa por catalog.json ni por el File System
+   Access de tu carpeta local.
+
+   No descarga nada: usa la YouTube Data API (búsqueda)
+   y el YouTube IFrame Player oficial (reproducción).
+========================================================= */
+
+const YOUTUBE_QUEUE_STORAGE =
+    "lims_youtube_queue";
+
+
+const youtubeToggle =
+    document.getElementById("youtubeToggle");
+
+const youtubePanel =
+    document.getElementById("youtubePanel");
+
+const youtubeSearchInput =
+    document.getElementById("youtubeSearchInput");
+
+const youtubeSearchButton =
+    document.getElementById("youtubeSearchButton");
+
+const youtubeError =
+    document.getElementById("youtubeError");
+
+const youtubeResults =
+    document.getElementById("youtubeResults");
+
+const youtubeQueueList =
+    document.getElementById("youtubeQueue");
+
+const youtubePlayerWrap =
+    document.getElementById("youtubePlayerWrap");
+
+const youtubeNowTitle =
+    document.getElementById("youtubeNowTitle");
+
+const youtubeNowChannel =
+    document.getElementById("youtubeNowChannel");
+
+const youtubePrevButton =
+    document.getElementById("youtubePrev");
+
+const youtubePlayPauseButton =
+    document.getElementById("youtubePlayPause");
+
+const youtubeNextButton =
+    document.getElementById("youtubeNext");
+
+
+let youtubeQueue =
+    [];
+
+let youtubeQueueIndex =
+    -1;
+
+let youtubePlayer =
+    null;
+
+let youtubePlayerReady =
+    false;
+
+
+/*
+ * Key del proyecto para la YouTube Data API v3.
+ * Visible en el código fuente, como cualquier cosa
+ * en un sitio estático sin backend — restringida en
+ * Google Cloud a solo esta API + dominios específicos,
+ * para limitar el daño si alguien la copia.
+ */
+
+const YOUTUBE_API_KEY =
+    "AIzaSyAiGuzSnY6OIm13Cf5PptUeWVgbN93V6Mc";
+
+
+/* =========================================================
+   PERSISTENCIA LOCAL DE LA COLA (por navegador, no
+   por catalog.json)
+========================================================= */
+
+function loadYoutubeQueue() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                YOUTUBE_QUEUE_STORAGE
+            );
+
+
+        const parsed =
+            saved
+                ? JSON.parse(saved)
+                : [];
+
+
+        return (
+            Array.isArray(parsed)
+                ? parsed
+                : []
+        );
+
+    }
+
+    catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+function saveYoutubeQueue() {
+
+    try {
+
+        localStorage.setItem(
+            YOUTUBE_QUEUE_STORAGE,
+            JSON.stringify(
+                youtubeQueue
+            )
+        );
+
+    }
+
+    catch (error) {}
+
+}
+
+
+function showYoutubeError(
+    message
+) {
+
+    youtubeError.textContent =
+        message;
+
+    youtubeError.classList.add(
+        "visible"
+    );
+
+}
+
+
+function hideYoutubeError() {
+
+    youtubeError.classList.remove(
+        "visible"
+    );
+
+}
+
+
+/* =========================================================
+   TOGGLE DEL PANEL
+========================================================= */
+
+youtubeToggle.addEventListener(
+    "click",
+    () => {
+
+        const isHidden =
+            youtubePanel.hidden;
+
+
+        youtubePanel.hidden =
+            !isHidden;
+
+    }
+);
+
+
+/* =========================================================
+   BÚSQUEDA (YouTube Data API v3)
+========================================================= */
+
+async function searchYoutube() {
+
+    hideYoutubeError();
+
+
+    const query =
+        youtubeSearchInput.value.trim();
+
+
+    if (!query) {
+
+        return;
+
+    }
+
+
+    const apiKey =
+        YOUTUBE_API_KEY;
+
+
+    if (!apiKey) {
+
+        showYoutubeError(
+            "YouTube search isn't configured."
+        );
+
+        return;
+
+    }
+
+
+    youtubeResults.innerHTML =
+        "";
+
+
+    const loadingLabel =
+        document.createElement(
+            "div"
+        );
+
+    loadingLabel.className =
+        "youtube-empty";
+
+    loadingLabel.textContent =
+        "Searching…";
+
+    youtubeResults.appendChild(
+        loadingLabel
+    );
+
+
+    try {
+
+        const url =
+            "https://www.googleapis.com/youtube/v3/search" +
+            "?part=snippet&type=video&maxResults=12" +
+            "&videoCategoryId=10" +
+            "&q=" + encodeURIComponent(query) +
+            "&key=" + encodeURIComponent(apiKey);
+
+
+        const response =
+            await fetch(url);
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                (
+                    data.error &&
+                    data.error.message
+                ) ||
+                ("HTTP " + response.status)
+            );
+
+        }
+
+
+        renderYoutubeResults(
+            data.items || []
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "YouTube search error:",
+            error
+        );
+
+
+        youtubeResults.innerHTML =
+            "";
+
+
+        showYoutubeError(
+            "Search failed: " + error.message
+        );
+
+    }
+
+}
+
+
+function renderYoutubeResults(
+    items
+) {
+
+    youtubeResults.innerHTML =
+        "";
+
+
+    if (
+        items.length === 0
+    ) {
+
+        const empty =
+            document.createElement(
+                "div"
+            );
+
+        empty.className =
+            "youtube-empty";
+
+        empty.textContent =
+            "No results.";
+
+        youtubeResults.appendChild(
+            empty
+        );
+
+        return;
+
+    }
+
+
+    items.forEach(
+        item => {
+
+            const videoId =
+                item.id &&
+                item.id.videoId;
+
+
+            if (!videoId) {
+
+                return;
+
+            }
+
+
+            const snippet =
+                item.snippet ||
+                {};
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "youtube-result";
+
+
+            const thumb =
+                document.createElement(
+                    "img"
+                );
+
+            thumb.className =
+                "youtube-thumb";
+
+            thumb.src =
+                (
+                    snippet.thumbnails &&
+                    snippet.thumbnails.default &&
+                    snippet.thumbnails.default.url
+                ) || "";
+
+            thumb.alt =
+                "";
+
+
+            const info =
+                document.createElement(
+                    "div"
+                );
+
+            info.className =
+                "youtube-item-info";
+
+
+            const title =
+                document.createElement(
+                    "div"
+                );
+
+            title.className =
+                "youtube-item-title";
+
+            title.textContent =
+                snippet.title || "Untitled";
+
+
+            const channel =
+                document.createElement(
+                    "div"
+                );
+
+            channel.className =
+                "youtube-item-channel";
+
+            channel.textContent =
+                snippet.channelTitle || "";
+
+
+            info.appendChild(
+                title
+            );
+
+            info.appendChild(
+                channel
+            );
+
+
+            const addButton =
+                document.createElement(
+                    "button"
+                );
+
+            addButton.className =
+                "youtube-add-button";
+
+            addButton.type =
+                "button";
+
+            addButton.textContent =
+                "+";
+
+            addButton.addEventListener(
+                "click",
+                event => {
+
+                    event.stopPropagation();
+
+
+                    addToYoutubeQueue({
+                        videoId,
+                        title: snippet.title || "Untitled",
+                        channel: snippet.channelTitle || "",
+                        thumbnail: thumb.src
+                    });
+
+                }
+            );
+
+
+            row.appendChild(
+                thumb
+            );
+
+            row.appendChild(
+                info
+            );
+
+            row.appendChild(
+                addButton
+            );
+
+
+            row.addEventListener(
+                "click",
+                () => {
+
+                    addToYoutubeQueue({
+                        videoId,
+                        title: snippet.title || "Untitled",
+                        channel: snippet.channelTitle || "",
+                        thumbnail: thumb.src
+                    });
+
+                }
+            );
+
+
+            youtubeResults.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+youtubeSearchButton.addEventListener(
+    "click",
+    searchYoutube
+);
+
+
+youtubeSearchInput.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            searchYoutube();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   COLA
+========================================================= */
+
+function addToYoutubeQueue(
+    track
+) {
+
+    youtubeQueue.push(
+        track
+    );
+
+
+    saveYoutubeQueue();
+
+
+    renderYoutubeQueue();
+
+}
+
+
+function removeFromYoutubeQueue(
+    index
+) {
+
+    youtubeQueue.splice(
+        index,
+        1
+    );
+
+
+    if (
+        index === youtubeQueueIndex
+    ) {
+
+        stopYoutubePlayback();
+
+    }
+
+    else if (
+        index < youtubeQueueIndex
+    ) {
+
+        youtubeQueueIndex -= 1;
+
+    }
+
+
+    saveYoutubeQueue();
+
+
+    renderYoutubeQueue();
+
+}
+
+
+function renderYoutubeQueue() {
+
+    youtubeQueueList.innerHTML =
+        "";
+
+
+    if (
+        youtubeQueue.length === 0
+    ) {
+
+        const empty =
+            document.createElement(
+                "div"
+            );
+
+        empty.className =
+            "youtube-empty";
+
+        empty.textContent =
+            "Your YouTube queue is empty.";
+
+        youtubeQueueList.appendChild(
+            empty
+        );
+
+        return;
+
+    }
+
+
+    youtubeQueue.forEach(
+        (track, index) => {
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "youtube-queue-item" +
+                (
+                    index === youtubeQueueIndex
+                        ? " playing"
+                        : ""
+                );
+
+
+            const thumb =
+                document.createElement(
+                    "img"
+                );
+
+            thumb.className =
+                "youtube-thumb";
+
+            thumb.src =
+                track.thumbnail || "";
+
+            thumb.alt =
+                "";
+
+
+            const info =
+                document.createElement(
+                    "div"
+                );
+
+            info.className =
+                "youtube-item-info";
+
+
+            const title =
+                document.createElement(
+                    "div"
+                );
+
+            title.className =
+                "youtube-item-title";
+
+            title.textContent =
+                track.title;
+
+
+            const channel =
+                document.createElement(
+                    "div"
+                );
+
+            channel.className =
+                "youtube-item-channel";
+
+            channel.textContent =
+                track.channel;
+
+
+            info.appendChild(
+                title
+            );
+
+            info.appendChild(
+                channel
+            );
+
+
+            const removeButton =
+                document.createElement(
+                    "button"
+                );
+
+            removeButton.className =
+                "youtube-remove-button";
+
+            removeButton.type =
+                "button";
+
+            removeButton.textContent =
+                "×";
+
+            removeButton.addEventListener(
+                "click",
+                event => {
+
+                    event.stopPropagation();
+
+
+                    removeFromYoutubeQueue(
+                        index
+                    );
+
+                }
+            );
+
+
+            row.appendChild(
+                thumb
+            );
+
+            row.appendChild(
+                info
+            );
+
+            row.appendChild(
+                removeButton
+            );
+
+
+            row.addEventListener(
+                "click",
+                () => {
+
+                    playYoutubeQueueIndex(
+                        index
+                    );
+
+                }
+            );
+
+
+            youtubeQueueList.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IFRAME PLAYER API (oficial de YouTube)
+========================================================= */
+
+let youtubeApiLoading =
+    null;
+
+
+function loadYoutubeIframeAPI() {
+
+    if (youtubeApiLoading) {
+
+        return youtubeApiLoading;
+
+    }
+
+
+    youtubeApiLoading =
+        new Promise(
+            resolve => {
+
+                if (
+                    window.YT &&
+                    window.YT.Player
+                ) {
+
+                    resolve();
+
+                    return;
+
+                }
+
+
+                window.onYouTubeIframeAPIReady =
+                    () => {
+
+                        resolve();
+
+                    };
+
+
+                const script =
+                    document.createElement(
+                        "script"
+                    );
+
+                script.src =
+                    "https://www.youtube.com/iframe_api";
+
+                document.head.appendChild(
+                    script
+                );
+
+            }
+        );
+
+
+    return youtubeApiLoading;
+
+}
+
+
+async function ensureYoutubePlayer() {
+
+    if (youtubePlayerReady) {
+
+        return;
+
+    }
+
+
+    await loadYoutubeIframeAPI();
+
+
+    return new Promise(
+        resolve => {
+
+            youtubePlayer =
+                new YT.Player(
+                    "youtubePlayerHost",
+                    {
+                        height: "100%",
+                        width: "100%",
+                        playerVars: {
+                            rel: 0
+                        },
+                        events: {
+                            onReady: () => {
+
+                                youtubePlayerReady =
+                                    true;
+
+
+                                resolve();
+
+                            },
+                            onStateChange: onYoutubeStateChange
+                        }
+                    }
+                );
+
+        }
+    );
+
+}
+
+
+function onYoutubeStateChange(
+    event
+) {
+
+    if (
+        event.data === YT.PlayerState.PLAYING
+    ) {
+
+        youtubePlayPauseButton.textContent =
+            "⏸";
+
+    }
+
+    else if (
+        event.data === YT.PlayerState.PAUSED
+    ) {
+
+        youtubePlayPauseButton.textContent =
+            "▶";
+
+    }
+
+    else if (
+        event.data === YT.PlayerState.ENDED
+    ) {
+
+        playYoutubeQueueIndex(
+            youtubeQueueIndex + 1
+        );
+
+    }
+
+}
+
+
+async function playYoutubeQueueIndex(
+    index
+) {
+
+    if (
+        index < 0 ||
+        index >= youtubeQueue.length
+    ) {
+
+        return;
+
+    }
+
+
+    youtubeQueueIndex =
+        index;
+
+
+    const track =
+        youtubeQueue[index];
+
+
+    await ensureYoutubePlayer();
+
+
+    youtubePlayerWrap.hidden =
+        false;
+
+
+    youtubeNowTitle.textContent =
+        track.title;
+
+
+    youtubeNowChannel.textContent =
+        track.channel;
+
+
+    youtubePlayer.loadVideoById(
+        track.videoId
+    );
+
+
+    renderYoutubeQueue();
+
+}
+
+
+function stopYoutubePlayback() {
+
+    youtubeQueueIndex =
+        -1;
+
+
+    if (
+        youtubePlayer &&
+        youtubePlayerReady
+    ) {
+
+        youtubePlayer.stopVideo();
+
+    }
+
+
+    youtubePlayerWrap.hidden =
+        true;
+
+}
+
+
+youtubePlayPauseButton.addEventListener(
+    "click",
+    () => {
+
+        if (
+            !youtubePlayer ||
+            !youtubePlayerReady
+        ) {
+
+            return;
+
+        }
+
+
+        const state =
+            youtubePlayer.getPlayerState();
+
+
+        if (
+            state === YT.PlayerState.PLAYING
+        ) {
+
+            youtubePlayer.pauseVideo();
+
+        }
+
+        else {
+
+            youtubePlayer.playVideo();
+
+        }
+
+    }
+);
+
+
+youtubePrevButton.addEventListener(
+    "click",
+    () => {
+
+        playYoutubeQueueIndex(
+            youtubeQueueIndex - 1
+        );
+
+    }
+);
+
+
+youtubeNextButton.addEventListener(
+    "click",
+    () => {
+
+        playYoutubeQueueIndex(
+            youtubeQueueIndex + 1
+        );
+
+    }
+);
+
+
+/*
+ * Cargar la cola guardada al iniciar.
+ */
+
+youtubeQueue =
+    loadYoutubeQueue();
+
+
+renderYoutubeQueue();
+
+
 async function initPlayer() {
 
     audio.volume =
