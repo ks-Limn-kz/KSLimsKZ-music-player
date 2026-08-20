@@ -1,1 +1,530 @@
-[]
+[
+    {
+        "id": "song-001",
+        "title": "CHIHIRO",
+        "artist": "Billie Eilish",
+        "album": "CHIHIRO",
+        "file": "Billie Eilish - CHIHIRO.mp3",
+        "cover": "Billie Eilish - CHIHIRO.png"
+    },
+    {
+        "id": "song-002",
+        "title": "Callaita",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "23. Bad Bunny - Callaita.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-003",
+        "title": "Agosto",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "22. Bad Bunny - Agosto.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-004",
+        "title": "Un Verano Sin Ti",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "21. Bad Bunny - Un Verano Sin Ti.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-005",
+        "title": "Me Fui de Vacaciones",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "20. Bad Bunny - Me Fui de Vacaciones.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-006",
+        "title": "Sacrificio",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "19. Sacrificio (Ft. Xantos).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-007",
+        "title": "Andrea",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "19. Bad Bunny, Buscabulla - Andrea.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-008",
+        "title": "Paranormal",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "18. Paranormal (Ft. Alvaro Díaz).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-009",
+        "title": "Un Coco",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "18. Bad Bunny - Un Coco.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-010",
+        "title": "Corleone Interlude",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "17. Corelone Interlude (Ft. Chencho Corleone).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-011",
+        "title": "Otro Atardecer",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "17. Bad Bunny, The Marías - Otro Atardecer.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-012",
+        "title": "Sci-Fi",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "16. Sci-Fi (Ft. Rauw Alejandro).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-013",
+        "title": "El Apagón",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "16. Bad Bunny - El Apagón.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-014",
+        "title": "Si Preguntas Por Mi",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "15. Si Preguntas Por Mi (Ft. Kris Floyd y Judeline).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-015",
+        "title": "Dos Mil 16",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "15. Bad Bunny - Dos Mil 16.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-016",
+        "title": "Lo Siento BB:/",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "14. Lo Siento BB (Ft. Bad Bunny y Julieta Venegas).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-017",
+        "title": "Ojitos Lindos",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "14. Bad Bunny, Bomba Estereo - Ojitos Lindos.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-018",
+        "title": "En Visto",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "13. En Visto (Ft. Ozuna).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-019",
+        "title": "Enséñame a Bailar",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "13. Bad Bunny - Enséñame a Bailar.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-020",
+        "title": "Volver",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "12. Volver (Ft. Rauw Alejandro, Skrillex y Four Tet).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-021",
+        "title": "Aguacero",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "12. Bad Bunny - Aguacero.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-022",
+        "title": "Me Jodi...",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "11. Me Jodi... (Ft. Arcangel).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-023",
+        "title": "Party",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "11. Bad Bunny, Rauw Alejandro - Party.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-024",
+        "title": "La Baby",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "10. La Baby (Ft. Daddy Yankee, Feid y Sech).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-025",
+        "title": "Efecto",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "10. Bad Bunny - Efecto.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-026",
+        "title": "Buenos Aires",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "09. Buenos Aires (Ft. Mora y Zion).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-027",
+        "title": "La Corriente",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "09. Bad Bunny, Tony Dize - La Corriente.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-028",
+        "title": "Mañana",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "08. Mañana (Ft. Young Miko y The Marías).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-029",
+        "title": "Neverita",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "08. Bad Bunny - Neverita.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-030",
+        "title": "Desde las 10",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "07. Desde las 10 (Ft. Kany García).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-031",
+        "title": "Tarot",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "07. Bad Bunny, Jhay Cortez - Tarot.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-032",
+        "title": "UN PESO",
+        "artist": "Bad Bunny",
+        "album": "OASIS",
+        "file": "06. J Balvin Ft Bad Bunny & Marciano Cantero - UN PESO.mp3",
+        "cover": "OASIS.png"
+    },
+    {
+        "id": "song-033",
+        "title": "Yo No Soy Celoso",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "06. Bad Bunny - Yo No Soy Celoso.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-034",
+        "title": "11 Y Once",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "06. 11 y Once (Ft. Sech y E.VAX).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-035",
+        "title": "La Canción",
+        "artist": "Bad Bunny",
+        "album": "OASIS",
+        "file": "5 - J Balvin Ft Bad Bunny - LA CANCIÓN.mp3",
+        "cover": "OASIS.png"
+    },
+    {
+        "id": "song-036",
+        "title": "Mojabi Ghost",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "05. Mojabi Ghost (Ft. Bad Bunny).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-037",
+        "title": "Un Ratito",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "05. Bad Bunny - Un Ratito.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-038",
+        "title": "Qué Pretendes",
+        "artist": "Bad Bunny",
+        "album": "OASIS",
+        "file": "4 - J Balvin Ft Bad Bunny - QUE PRETENDES.mp3",
+        "cover": "OASIS.png"
+    },
+    {
+        "id": "song-039",
+        "title": "Fantasma AVC",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "04. Fantasma AVC (Ft. Jhayco).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-040",
+        "title": "Tití Me Preguntó",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "04. Bad Bunny - Tití Me Preguntó.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-041",
+        "title": "Cuidao Por Ahí",
+        "artist": "Bad Bunny",
+        "album": "OASIS",
+        "file": "3 - J Balvin Ft Bad Bunny - CUIDAO POR AHÍ.mp3",
+        "cover": "OASIS.png"
+    },
+    {
+        "id": "song-042",
+        "title": "Todavía",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "03. Todavía (Ft. Wisin y Yandel).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-043",
+        "title": "Me Porto Bonito",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "03. Bad Bunny, Chencho Corleone - Me Porto Bonito.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-044",
+        "title": "Yo Le Llego",
+        "artist": "Bad Bunny",
+        "album": "OASIS",
+        "file": "2 - J Balvin Ft Bad Bunny - YO LE LLEGO.mp3",
+        "cover": "OASIS.png"
+    },
+    {
+        "id": "song-045",
+        "title": "PASIEMPRE",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "02. Pasiempre (Ft. Bad Bunny, Arcangel, Jhayco, Myke Towers, Omar Courtz y Arca).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-046",
+        "title": "Después de la Playa",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "02. Bad Bunny - Después de la Playa.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-047",
+        "title": "Mojaita",
+        "artist": "Bad Bunny",
+        "album": "OASIS",
+        "file": "1 - J Balvin Ft Bad Bunny - MOJAITA.mp3",
+        "cover": "OASIS.png"
+    },
+    {
+        "id": "song-048",
+        "title": "Obstáculo",
+        "artist": "Tainy",
+        "album": "DATA",
+        "file": "01. Obstáculo (Ft. Myke Towers).mp3",
+        "cover": "DATA.png"
+    },
+    {
+        "id": "song-049",
+        "title": "Moscow Mule",
+        "artist": "Bad Bunny",
+        "album": "Un Verano Sin Ti",
+        "file": "01. Bad Bunny - Moscow Mule.mp3",
+        "cover": "Un verano sin ti.png"
+    },
+    {
+        "id": "song-1787193084920-p1d2bdjyop",
+        "title": "NUEVAYoL",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "01. Bad Bunny - NUEVAYoL.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193154299-213xrn6hi18",
+        "title": "VOY A LLeVARTE PA PR",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "02. Bad Bunny - VOY A LLeVARTE PA PR.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193250166-g9z1zhb3lch",
+        "title": "BAILE INoLVIDABLE",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "03. Bad Bunny - BAILE INoLVIDABLE.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193323141-x1lunzdccfr",
+        "title": "PERFuMITO NUEVO",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "04. Bad Bunny, RaiNao - PERFuMITO NUEVO.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193348529-8528h5k7cay",
+        "title": "WELTiTA",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "05. Bad Bunny, CHUWI - WELTiTA.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193379343-dspf5sdk6un",
+        "title": "VeLDÁ",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "06. Bad Bunny, Omar Courtz, Dei V - VeLDÁ.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193410414-ntbe43ln9xe",
+        "title": "EL CLúB",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "07. Bad Bunny - EL CLúB.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193434050-xfcjriq8ytm",
+        "title": "KETU TeCRÉ",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "08. Bad Bunny - KETU TeCRÉ.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193458347-0iv70csenta5",
+        "title": "BOKeTE",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "09. Bad Bunny - BOKeTE.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193489098-2qx8ippfscr",
+        "title": "KLOuFRENS",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "10. Bad Bunny - KLOuFRENS.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193533139-c5zt2yzjotd",
+        "title": "TURiSTA",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "11. Bad Bunny - TURiSTA.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193560064-coaboo0s11g",
+        "title": "CAFé CON RON",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "12. Bad Bunny, Los Pleneros de la Cresta - CAFé CON RON.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193597086-nj9gsb1z2zi",
+        "title": "PIToRRO DE COCO",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "13. Bad Bunny - PIToRRO DE COCO.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193632285-n215vsrv1fm",
+        "title": "LO QUE LE PASÓ A HAWAii",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "14. Bad Bunny - LO QUE LE PASÓ A HAWAii.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193654252-c16ggwj0z8q",
+        "title": "EoO",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "15. Bad Bunny - EoO.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193679625-kr1prekfg6s",
+        "title": "DtMF",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "16. Bad Bunny - DtMF.mp3",
+        "cover": "cover.jpg"
+    },
+    {
+        "id": "song-1787193702968-j4up5izfyd",
+        "title": "LA MuDANZA",
+        "artist": "Bad Bunny",
+        "album": "DTMF",
+        "file": "17. Bad Bunny - LA MuDANZA.mp3",
+        "cover": "cover.jpg"
+    }
+]
