@@ -340,8 +340,28 @@ function downloadCatalogFile() {
 const player =
     document.getElementById("player");
 
+/*
+ * Placeholder neutro (gris oscuro, sin depender de
+ * ningún archivo) para cuando un cover no carga —
+ * evita el ícono de imagen rota del navegador.
+ */
+
+const FALLBACK_COVER_DATA_URI =
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23222226'/%3E%3C/svg%3E";
+
 const cover =
     document.getElementById("cover");
+
+cover.onerror =
+    () => {
+
+        cover.onerror =
+            null;
+
+        cover.src =
+            FALLBACK_COVER_DATA_URI;
+
+    };
 
 const coverWrapper =
     document.querySelector(".cover-wrapper");
@@ -1945,6 +1965,29 @@ audio.addEventListener(
             audio.error
         );
 
+
+        console.error(
+            "Archivo:",
+            audio.src
+        );
+
+
+        player.classList.add(
+            "audio-error"
+        );
+
+
+        setTimeout(
+            () => {
+
+                player.classList.remove(
+                    "audio-error"
+                );
+
+            },
+            1200
+        );
+
     }
 );
 
@@ -2965,6 +3008,18 @@ function renderPlaylist(
 
                             image.alt =
                                 song.title;
+
+
+                            image.onerror =
+                                () => {
+
+                                    image.onerror =
+                                        null;
+
+                                    image.src =
+                                        FALLBACK_COVER_DATA_URI;
+
+                                };
 
 
                             const info =
@@ -4770,8 +4825,26 @@ document.addEventListener(
             event.target.tagName ===
                 "INPUT" ||
             event.target.tagName ===
-                "TEXTAREA"
+                "TEXTAREA" ||
+            event.target.tagName ===
+                "BUTTON" ||
+            event.target.tagName ===
+                "SUMMARY" ||
+            event.target.isContentEditable
         ) {
+
+            /*
+             * Si el foco está en un botón, un
+             * <summary> (dropdown de artista/álbum),
+             * o un campo de texto, dejamos que la
+             * tecla haga su comportamiento nativo
+             * normal (activar ese elemento) en vez
+             * de interceptarla para el reproductor.
+             *
+             * Si no, Tab + Espacio en cualquier botón
+             * terminaría pausando la canción en vez
+             * de activar ese botón.
+             */
 
             return;
 

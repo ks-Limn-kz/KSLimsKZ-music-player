@@ -102,6 +102,43 @@ body {
 
 
 /* =========================================================
+   AUDIO ERROR
+   Feedback visual breve cuando una canción no puede
+   reproducirse (archivo roto, no encontrado, etc.) —
+   antes esto solo se veía en la consola.
+========================================================= */
+
+@keyframes audioErrorPulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 35px 100px rgba(0,0,0,.7),
+            0 0 130px var(--accent-glow),
+            inset 0 1px 0 rgba(255,255,255,.08);
+    }
+
+    30% {
+        box-shadow:
+            0 35px 100px rgba(0,0,0,.7),
+            0 0 90px rgba(255,70,70,.65),
+            inset 0 0 0 1px rgba(255,90,90,.5);
+    }
+
+}
+
+.player.audio-error {
+    animation:
+        audioErrorPulse .6s ease-in-out 2;
+}
+
+.player.audio-error .song-title,
+.player.audio-error .song-artist {
+    color: #ff8a80;
+}
+
+
+/* =========================================================
    BACKGROUND
 ========================================================= */
 
@@ -1672,477 +1709,6 @@ body {
 
 
 /* =========================================================
-   ADD SONG PANEL
-========================================================= */
-
-.add-song-panel {
-    position: absolute;
-
-    z-index: 110;
-
-    inset: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    padding: 28px;
-
-    overflow-y: auto;
-
-    background:
-        rgba(5,5,5,.97);
-
-    backdrop-filter:
-        blur(35px);
-
-    -webkit-backdrop-filter:
-        blur(35px);
-
-    transform:
-        translateX(105%);
-
-    transition:
-        transform .55s var(--ease);
-}
-
-.add-song-panel.open {
-    transform:
-        translateX(0);
-}
-
-
-/* =========================================================
-   ADD SONG HEADER
-========================================================= */
-
-.add-song-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-}
-
-.add-song-label {
-    display: block;
-
-    margin-bottom: 5px;
-
-    color:
-        var(--accent);
-
-    font-size: 10px;
-
-    font-weight: 800;
-
-    letter-spacing: .2em;
-}
-
-.add-song-header h2 {
-    font-size: 28px;
-
-    letter-spacing: -.045em;
-}
-
-.add-song-description {
-    margin-top: 8px;
-
-    max-width: 300px;
-
-    color:
-        var(--faint);
-
-    font-size: 11px;
-
-    line-height: 1.5;
-}
-
-
-/* =========================================================
-   ADD SONG FORM
-========================================================= */
-
-.add-song-form {
-    display: flex;
-    flex-direction: column;
-
-    gap: 15px;
-
-    margin-top: 26px;
-}
-
-.form-field {
-    display: flex;
-    flex-direction: column;
-
-    gap: 7px;
-}
-
-.form-field label {
-    color:
-        rgba(255,255,255,.62);
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    letter-spacing: .08em;
-
-    text-transform: uppercase;
-}
-
-.form-field input,
-.form-field select {
-    width: 100%;
-
-    min-height: 45px;
-
-    padding: 0 13px;
-
-    border:
-        1px solid rgba(255,255,255,.08);
-
-    border-radius: 12px;
-
-    outline: none;
-
-    background:
-        rgba(255,255,255,.05);
-
-    color: #fff;
-
-    font-family: inherit;
-    font-size: 13px;
-
-    transition:
-        border-color .25s ease,
-        box-shadow .3s ease,
-        background .25s ease;
-}
-
-.form-field input:focus,
-.form-field select:focus {
-    border-color:
-        var(--accent);
-
-    background:
-        rgba(255,255,255,.07);
-
-    box-shadow:
-        0 0 22px var(--accent-dark);
-}
-
-.form-field input::placeholder {
-    color:
-        rgba(255,255,255,.28);
-}
-
-.form-field select option {
-    background:
-        #111;
-
-    color:
-        #fff;
-}
-
-
-/* =========================================================
-   FILE INPUTS
-========================================================= */
-
-.file-input-wrapper {
-    position: relative;
-
-    width: 100%;
-}
-
-.file-input {
-    position: absolute;
-
-    width: 1px;
-    height: 1px;
-
-    opacity: 0;
-
-    pointer-events: none;
-}
-
-.file-input-label {
-    width: 100%;
-
-    min-height: 70px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex-direction: column;
-
-    gap: 6px;
-
-    padding: 12px;
-
-    border:
-        1px dashed rgba(255,255,255,.16);
-
-    border-radius: 13px;
-
-    background:
-        rgba(255,255,255,.035);
-
-    color:
-        rgba(255,255,255,.62);
-
-    text-align: center;
-
-    cursor: pointer;
-
-    transition:
-        border-color .25s ease,
-        background .25s ease,
-        color .25s ease;
-}
-
-.file-input-label:hover {
-    border-color:
-        var(--accent);
-
-    background:
-        var(--accent-dark);
-
-    color:
-        #fff;
-}
-
-.file-input-label svg {
-    width: 21px;
-    height: 21px;
-
-    fill: none;
-
-    stroke: currentColor;
-    stroke-width: 1.7;
-
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.file-name {
-    max-width: 90%;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    font-size: 10px;
-}
-
-
-/* =========================================================
-   COVER PREVIEW
-========================================================= */
-
-.cover-preview {
-    width: 90px;
-    height: 90px;
-
-    margin: 4px auto 0;
-
-    object-fit: cover;
-
-    border-radius: 14px;
-
-    border:
-        1px solid rgba(255,255,255,.1);
-
-    background:
-        rgba(255,255,255,.04);
-
-    display: none;
-
-    box-shadow:
-        0 15px 35px rgba(0,0,0,.35);
-}
-
-.cover-preview.visible {
-    display: block;
-}
-
-
-/* =========================================================
-   FORM ACTIONS
-========================================================= */
-
-.form-actions {
-    display: flex;
-
-    gap: 9px;
-
-    margin-top: 6px;
-}
-
-.form-button {
-    min-height: 44px;
-
-    flex: 1;
-
-    border:
-        1px solid rgba(255,255,255,.08);
-
-    border-radius: 12px;
-
-    background:
-        rgba(255,255,255,.055);
-
-    color:
-        rgba(255,255,255,.72);
-
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        transform .2s ease,
-        background .25s ease,
-        border-color .25s ease,
-        color .25s ease;
-}
-
-.form-button:hover {
-    color: #fff;
-
-    background:
-        rgba(255,255,255,.1);
-
-    border-color:
-        rgba(255,255,255,.15);
-}
-
-.form-button:active {
-    transform:
-        scale(.96);
-}
-
-.form-button.primary {
-    background:
-        var(--accent);
-
-    color:
-        #fff;
-
-    border-color:
-        var(--accent);
-
-    box-shadow:
-        0 8px 25px var(--accent-dark);
-}
-
-.form-button.primary:hover {
-    filter:
-        brightness(1.12);
-}
-
-
-/* =========================================================
-   EDIT SONG
-========================================================= */
-
-.edit-song-panel {
-    position: absolute;
-
-    z-index: 120;
-
-    inset: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    padding: 28px;
-
-    overflow-y: auto;
-
-    background:
-        rgba(5,5,5,.98);
-
-    backdrop-filter:
-        blur(35px);
-
-    -webkit-backdrop-filter:
-        blur(35px);
-
-    transform:
-        translateX(105%);
-
-    transition:
-        transform .55s var(--ease);
-}
-
-.edit-song-panel.open {
-    transform:
-        translateX(0);
-}
-
-
-/* =========================================================
-   LIBRARY MANAGEMENT
-========================================================= */
-
-.library-actions {
-    display: flex;
-
-    gap: 8px;
-
-    margin-top: 20px;
-}
-
-.library-action-button {
-    flex: 1;
-
-    min-height: 40px;
-
-    border:
-        1px solid rgba(255,255,255,.08);
-
-    border-radius: 11px;
-
-    background:
-        rgba(255,255,255,.045);
-
-    color:
-        rgba(255,255,255,.65);
-
-    font-family: inherit;
-
-    font-size: 11px;
-    font-weight: 650;
-
-    cursor: pointer;
-
-    transition:
-        background .25s ease,
-        border-color .25s ease,
-        color .25s ease,
-        transform .2s ease;
-}
-
-.library-action-button:hover {
-    color: #fff;
-
-    background:
-        rgba(255,255,255,.08);
-
-    border-color:
-        rgba(255,255,255,.14);
-}
-
-.library-action-button:active {
-    transform:
-        scale(.97);
-}
-
-
-/* =========================================================
    EMPTY MESSAGE
 ========================================================= */
 
@@ -2211,25 +1777,20 @@ body {
 
 /* =========================================================
    SCROLLBARS
-   MISMO ESTILO PARA PLAYLIST / AGREGAR / EDITAR
+   .playlist cubre tanto la playlist como el panel
+   del Manager — #manager reutiliza la misma clase.
 ========================================================= */
 
-.playlist::-webkit-scrollbar,
-.add-song-panel::-webkit-scrollbar,
-.edit-song-panel::-webkit-scrollbar {
+.playlist::-webkit-scrollbar {
     width: 5px;
 }
 
-.playlist::-webkit-scrollbar-track,
-.add-song-panel::-webkit-scrollbar-track,
-.edit-song-panel::-webkit-scrollbar-track {
+.playlist::-webkit-scrollbar-track {
     background:
         transparent;
 }
 
-.playlist::-webkit-scrollbar-thumb,
-.add-song-panel::-webkit-scrollbar-thumb,
-.edit-song-panel::-webkit-scrollbar-thumb {
+.playlist::-webkit-scrollbar-thumb {
     background:
         rgba(255,255,255,.15);
 
@@ -2237,9 +1798,7 @@ body {
         999px;
 }
 
-.playlist::-webkit-scrollbar-thumb:hover,
-.add-song-panel::-webkit-scrollbar-thumb:hover,
-.edit-song-panel::-webkit-scrollbar-thumb:hover {
+.playlist::-webkit-scrollbar-thumb:hover {
     background:
         var(--accent);
 }
@@ -2247,9 +1806,7 @@ body {
 
 /* Firefox */
 
-.playlist,
-.add-song-panel,
-.edit-song-panel {
+.playlist {
     scrollbar-width: thin;
 
     scrollbar-color:
@@ -2264,7 +1821,8 @@ body {
 
 button:focus-visible,
 input:focus-visible,
-select:focus-visible {
+select:focus-visible,
+summary:focus-visible {
     outline:
         2px solid var(--accent);
 
@@ -2319,9 +1877,7 @@ select:focus-visible {
         flex-basis: 39px;
     }
 
-    .playlist,
-    .add-song-panel,
-    .edit-song-panel {
+    .playlist {
         padding:
             22px 19px;
     }
