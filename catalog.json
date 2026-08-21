@@ -526,45 +526,5 @@
         "album": "DTMF",
         "file": "17. Bad Bunny - LA MuDANZA.mp3",
         "cover": "cover.jpg"
-    },
-    {
-        "id": "song-1787194969714-v5cxhssgsj",
-        "title": "BRRR",
-        "artist": "Anuel AA (Chicho request)",
-        "album": "Las Leyendas Nunca Mueren",
-        "file": "Anuel AA - BRRR.mp3",
-        "cover": "ANUEL AA.jpg"
-    },
-    {
-        "id": "song-1787195007671-wbxjo1jsy6",
-        "title": "Borracha y Loca",
-        "artist": "Anuel AA (Chicho request)",
-        "album": "Las Leyendas Nunca Mueren",
-        "file": "Anuel AA - Borracha y Loca.mp3",
-        "cover": "ANUEL AA.jpg"
-    },
-    {
-        "id": "song-1787195032308-7d8q92z41h7",
-        "title": "Vibra",
-        "artist": "Anuel AA (Chicho request)",
-        "album": "Las Leyendas Nunca Mueren",
-        "file": "Anuel AA, David Guetta - Vibra.mp3",
-        "cover": "ANUEL AA.jpg"
-    },
-    {
-        "id": "song-1787195057096-vuq352yyljg",
-        "title": "La Maquina",
-        "artist": "Anuel AA (Chicho request)",
-        "album": "Las Leyendas Nunca Mueren",
-        "file": "Anuel AA, De La Ghetto, Yailin La Más Viral, Jowell y Randy - La Maquina.mp3",
-        "cover": "ANUEL AA.jpg"
-    },
-    {
-        "id": "song-1787195081827-9pz0a57jk0j",
-        "title": "Hoddue",
-        "artist": "Anuel AA (Chicho request)",
-        "album": "Las Leyendas Nunca Mueren",
-        "file": "Anuel AA, Bryant Myers - Hoddie.mp3",
-        "cover": "ANUEL AA.jpg"
     }
 ]
