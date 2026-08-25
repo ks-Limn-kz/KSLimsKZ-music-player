@@ -518,7 +518,16 @@ let currentIndex = 0;
 
 let shuffleEnabled = false;
 
-let repeatEnabled = false;
+/*
+ * "off"  → no repite, se detiene al llegar
+ *          al final de la playlist
+ * "all"  → al terminar la última canción,
+ *          vuelve a la primera (comportamiento
+ *          de siempre)
+ * "one"  → repite la canción actual en loop
+ */
+
+let repeatMode = "off";
 
 let rotation = 0;
 
@@ -2325,28 +2334,52 @@ repeatButton.addEventListener(
     "click",
     () => {
 
-        repeatEnabled =
-            !repeatEnabled;
+        const nextMode = {
+            off: "all",
+            all: "one",
+            one: "off"
+        };
+
+
+        repeatMode =
+            nextMode[repeatMode];
 
 
         repeatButton.classList.toggle(
             "active",
-            repeatEnabled
+            repeatMode !== "off"
+        );
+
+
+        repeatButton.classList.toggle(
+            "repeat-one",
+            repeatMode === "one"
         );
 
 
         repeatButton.setAttribute(
             "aria-pressed",
             String(
-                repeatEnabled
+                repeatMode !== "off"
             )
         );
 
 
+        const labels = {
+            off: "Repetir",
+            all: "Repetir playlist activado",
+            one: "Repetir una canción activado"
+        };
+
+
         repeatButton.title =
-            repeatEnabled
-                ? "Repetir activado"
-                : "Repetir";
+            labels[repeatMode];
+
+
+        repeatButton.setAttribute(
+            "aria-label",
+            labels[repeatMode]
+        );
 
     }
 );
@@ -2361,13 +2394,38 @@ audio.addEventListener(
     () => {
 
         if (
-            repeatEnabled
+            repeatMode === "one"
         ) {
 
             audio.currentTime =
                 0;
 
             playSong();
+
+            return;
+
+        }
+
+
+        const isLastSong =
+            currentIndex ===
+            songs.length - 1;
+
+
+        if (
+            repeatMode === "off" &&
+            isLastSong &&
+            !shuffleEnabled
+        ) {
+
+            /*
+             * Llegamos al final de la playlist
+             * sin repeat activado — nos quedamos
+             * quietos en la última canción en
+             * vez de volver a la primera.
+             */
+
+            pauseSong();
 
             return;
 
@@ -2507,21 +2565,60 @@ function updateProgressBackground() {
    VOLUME
 ========================================================= */
 
+const VOLUME_STORAGE_KEY =
+    "lims_volume";
+
+
+function setVolumeValue(
+    newValue
+) {
+
+    const clamped =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                newValue
+            )
+        );
+
+
+    volume.value =
+        clamped;
+
+
+    audio.volume =
+        clamped / 100;
+
+
+    updateVolume();
+
+
+    try {
+
+        localStorage.setItem(
+            VOLUME_STORAGE_KEY,
+            String(
+                clamped
+            )
+        );
+
+    }
+
+    catch (error) {}
+
+}
+
+
 volume.addEventListener(
     "input",
     () => {
 
-        const value =
+        setVolumeValue(
             Number(
                 volume.value
-            );
-
-
-        audio.volume =
-            value / 100;
-
-
-        updateVolume();
+            )
+        );
 
     }
 );
@@ -3739,11 +3836,221 @@ function renderEditSongs() {
             );
 
 
+            /*
+             * DELETE BUTTON
+             */
+
+            const deleteButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            deleteButton.type =
+                "button";
+
+
+            deleteButton.className =
+                "song-item";
+
+
+            deleteButton.style.marginTop =
+                "8px";
+
+
+            deleteButton.style.justifyContent =
+                "center";
+
+
+            deleteButton.style.borderColor =
+                "rgba(255,90,90,.35)";
+
+
+            deleteButton.innerHTML =
+                `<div class="song-item-title" style="color:#ff8a80;">
+                    Eliminar del catálogo
+                </div>`;
+
+
+            deleteButton.addEventListener(
+                "click",
+                () => {
+
+                    deleteSong(
+                        song
+                    );
+
+                }
+            );
+
+
+            wrapper.appendChild(
+                deleteButton
+            );
+
+
             editSongList.appendChild(
                 wrapper
             );
 
         }
+    );
+
+}
+
+
+/* =========================================================
+   DELETE SONG
+
+   IMPORTANTE: esto SOLO saca la canción del
+   catálogo (catalog.json). NO borra el archivo
+   mp3 ni el cover de music/covers — sobre todo
+   porque un mismo cover puede estar compartido
+   por varias canciones del mismo álbum, y borrar
+   el archivo podría romper las demás.
+
+   Si de verdad quieres borrar el archivo físico
+   también, hazlo manualmente desde tu carpeta
+   music/ o covers/.
+========================================================= */
+
+async function deleteSong(
+    song
+) {
+
+    const index =
+        songs.indexOf(
+            song
+        );
+
+
+    if (
+        index === -1
+    ) {
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            `¿Eliminar "${song.title}" del catálogo?\n\n` +
+            `Esto NO borra el archivo mp3 ni el cover ` +
+            `de tus carpetas — solo lo saca de la lista.`
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    const isCurrentSong =
+        index === currentIndex;
+
+
+    songs.splice(
+        index,
+        1
+    );
+
+
+    if (
+        index < currentIndex
+    ) {
+
+        currentIndex -= 1;
+
+    }
+
+    else if (
+        isCurrentSong
+    ) {
+
+        stopRotation();
+
+
+        audio.pause();
+
+
+        audio.removeAttribute(
+            "src"
+        );
+
+
+        if (
+            songs.length === 0
+        ) {
+
+            currentIndex =
+                0;
+
+
+            songTitle.textContent =
+                "Sin canciones";
+
+
+            songArtist.textContent =
+                "Agrega música desde el Manager";
+
+
+            if (songAlbum) {
+
+                songAlbum.textContent =
+                    "";
+
+
+                songAlbum.classList.remove(
+                    "visible"
+                );
+
+            }
+
+
+            cover.src =
+                FALLBACK_COVER_DATA_URI;
+
+        }
+
+        else {
+
+            const newIndex =
+                Math.min(
+                    index,
+                    songs.length - 1
+                );
+
+
+            loadSong(
+                newIndex,
+                false
+            );
+
+        }
+
+    }
+
+
+    const savedToDisk =
+        await persistCatalog();
+
+
+    renderPlaylist(
+        search.value
+    );
+
+
+    renderEditSongs();
+
+
+    alert(
+        savedToDisk
+            ? "✓ Canción eliminada. catalog.json actualizado — el cambio se verá en cualquier navegador."
+            : "Eliminada en este navegador, pero no se pudo escribir catalog.json. " +
+              "Usa \"Descargar catalog.json\" para guardar el cambio manualmente."
     );
 
 }
@@ -4883,22 +5190,11 @@ document.addEventListener(
                 event.preventDefault();
 
 
-                volume.value =
-                    Math.min(
-                        100,
-                        Number(
-                            volume.value
-                        ) + 5
-                    );
-
-
-                audio.volume =
+                setVolumeValue(
                     Number(
                         volume.value
-                    ) / 100;
-
-
-                updateVolume();
+                    ) + 5
+                );
 
                 break;
 
@@ -4908,22 +5204,12 @@ document.addEventListener(
                 event.preventDefault();
 
 
-                volume.value =
-                    Math.max(
-                        0,
-                        Number(
-                            volume.value
-                        ) - 5
-                    );
-
-
-                audio.volume =
+                setVolumeValue(
                     Number(
                         volume.value
-                    ) / 100;
+                    ) - 5
+                );
 
-
-                updateVolume();
 
                 break;
 
@@ -4939,10 +5225,35 @@ document.addEventListener(
 
 async function initPlayer() {
 
-    audio.volume =
-        Number(
-            volume.value
-        ) / 100;
+    let savedVolume =
+        100;
+
+
+    try {
+
+        const stored =
+            localStorage.getItem(
+                VOLUME_STORAGE_KEY
+            );
+
+
+        if (stored !== null) {
+
+            savedVolume =
+                Number(
+                    stored
+                );
+
+        }
+
+    }
+
+    catch (error) {}
+
+
+    setVolumeValue(
+        savedVolume
+    );
 
 
     audio.muted =
@@ -4951,9 +5262,6 @@ async function initPlayer() {
 
     audio.autoplay =
         false;
-
-
-    updateVolume();
 
 
     /*

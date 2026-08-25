@@ -812,6 +812,37 @@ body {
         translateX(-50%) scale(1);
 }
 
+/*
+ * Indicador "1" para repeat-one — reemplaza
+ * el puntito por un número pequeño cuando
+ * se repite una sola canción en loop.
+ */
+
+.control-button.repeat-one .mode-dot {
+    bottom: 1px;
+
+    width: auto;
+    height: auto;
+
+    transform:
+        translateX(-50%) scale(1);
+
+    background: none;
+
+    box-shadow: none;
+
+    color: var(--accent);
+
+    font-size: 8px;
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+.control-button.repeat-one .mode-dot::after {
+    content: "1";
+}
+
 
 /* =========================================================
    PLAY BUTTON
