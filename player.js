@@ -1678,6 +1678,12 @@ function loadSong(
     }
 
 
+    updateMediaSessionMetadata(
+        song,
+        coverURL
+    );
+
+
     /*
      * TRANSICIÓN CINEMATOGRÁFICA
      * AL CAMBIAR DE CANCIÓN.
@@ -1815,6 +1821,11 @@ async function playSong() {
 
         startVisualizer();
 
+
+        updateMediaSessionPlaybackState(
+            "playing"
+        );
+
     }
 
     catch (error) {
@@ -1853,6 +1864,171 @@ async function playSong() {
 
 
 /* =========================================================
+   MEDIA SESSION
+   Controles desde la pantalla de bloqueo, el centro
+   de medios del sistema, y teclas multimedia del
+   teclado. No toca la lógica de reproducción — solo
+   la refleja hacia afuera.
+========================================================= */
+
+function updateMediaSessionMetadata(
+    song,
+    coverURL
+) {
+
+    if (
+        !("mediaSession" in navigator)
+    ) {
+
+        return;
+
+    }
+
+
+    try {
+
+        navigator.mediaSession.metadata =
+            new MediaMetadata(
+                {
+                    title:
+                        song.title,
+
+                    artist:
+                        song.artist,
+
+                    album:
+                        song.album || "",
+
+                    artwork: [
+                        {
+                            src: coverURL,
+                            sizes: "512x512"
+                        }
+                    ]
+                }
+            );
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "No se pudo actualizar Media Session:",
+            error
+        );
+
+    }
+
+}
+
+
+function updateMediaSessionPlaybackState(
+    state
+) {
+
+    if (
+        !("mediaSession" in navigator)
+    ) {
+
+        return;
+
+    }
+
+
+    navigator.mediaSession.playbackState =
+        state;
+
+}
+
+
+function setupMediaSessionActionHandlers() {
+
+    if (
+        !("mediaSession" in navigator)
+    ) {
+
+        return;
+
+    }
+
+
+    const handlers = {
+
+        play: () => {
+
+            playSong();
+
+        },
+
+        pause: () => {
+
+            pauseSong();
+
+        },
+
+        previoustrack: () => {
+
+            previousSong();
+
+        },
+
+        nexttrack: () => {
+
+            nextSong(true);
+
+        },
+
+        seekto: event => {
+
+            if (
+                event.seekTime !== undefined &&
+                Number.isFinite(
+                    audio.duration
+                )
+            ) {
+
+                audio.currentTime =
+                    event.seekTime;
+
+            }
+
+        }
+
+    };
+
+
+    Object.keys(
+        handlers
+    ).forEach(
+        action => {
+
+            try {
+
+                navigator.mediaSession.setActionHandler(
+                    action,
+                    handlers[action]
+                );
+
+            }
+
+            catch (error) {
+
+                /*
+                 * Algunos navegadores no soportan
+                 * todas las acciones (ej. seekto
+                 * en Firefox) — se ignora sin
+                 * romper el resto.
+                 */
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
    PAUSE
 ========================================================= */
 
@@ -1878,6 +2054,11 @@ function pauseSong() {
 
 
     stopRotation();
+
+
+    updateMediaSessionPlaybackState(
+        "paused"
+    );
 
 }
 
@@ -2502,6 +2683,39 @@ function updateProgress() {
 
 
     updateProgressBackground();
+
+
+    if (
+        "mediaSession" in navigator &&
+        "setPositionState" in navigator.mediaSession &&
+        Number.isFinite(total) &&
+        total > 0
+    ) {
+
+        try {
+
+            navigator.mediaSession.setPositionState(
+                {
+                    duration: total,
+                    playbackRate: audio.playbackRate || 1,
+                    position: Math.min(current, total)
+                }
+            );
+
+        }
+
+        catch (error) {
+
+            /*
+             * setPositionState puede fallar si se
+             * llama justo cuando cambia de canción
+             * (duración todavía inconsistente) —
+             * se ignora, no es crítico.
+             */
+
+        }
+
+    }
 
 }
 
@@ -5262,6 +5476,40 @@ async function initPlayer() {
 
     audio.autoplay =
         false;
+
+
+    setupMediaSessionActionHandlers();
+
+
+    /*
+     * SERVICE WORKER (PWA)
+     *
+     * Se registra solo si el navegador lo soporta Y
+     * estamos en un contexto seguro real (https o
+     * localhost) — en file:// o dentro del launcher
+     * de Google Sites (about:blank) esto no aplica,
+     * y no debe romper nada si falla.
+     */
+
+    if (
+        "serviceWorker" in navigator &&
+        window.isSecureContext
+    ) {
+
+        navigator.serviceWorker
+            .register("sw.js")
+            .catch(
+                error => {
+
+                    console.warn(
+                        "No se pudo registrar el service worker:",
+                        error
+                    );
+
+                }
+            );
+
+    }
 
 
     /*
